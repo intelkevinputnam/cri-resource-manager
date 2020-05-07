@@ -180,7 +180,7 @@ policy configurations.
 
 You can use CRI Resource Manager to simply inspect all proxied CRI requests and
 responses without applying any policy. Run CRI Resource Manager with the
-provided [sample configuration](sample-configs/cri-full-message-dump.cfg]
+provided [sample configuration](sample-configs/cri-full-message-dump.cfg)
 for doing this.
 
 
@@ -212,7 +212,6 @@ to your real kubelet instance's configuration:
   kubelet --experimental-dockershim --port 11250 --cgroup-driver {systemd|cgroupfs}
 
 ```
-
 
 ## Logging and Debugging
 

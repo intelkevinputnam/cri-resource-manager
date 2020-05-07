@@ -93,7 +93,7 @@ def setup(app):
     app.connect('doctree-resolved',fixLocalMDAnchors)
     app.connect('missing-reference',fixRSTLinkInMD)
 
-##############################################################################
+###############################################################################
 #
 #  This section defines callbacks that make markdown specific tweaks to
 #  either:
@@ -104,7 +104,7 @@ def setup(app):
 #
 #  Only use these changes if using the extension ``recommonmark``.
 #
-##############################################################################
+###############################################################################
 
 
 # Callback registerd with 'missing-reference'. 
