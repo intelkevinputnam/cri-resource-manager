@@ -2,7 +2,7 @@
 
 ## Introduction
 
-CRI Resource Manager is a Container Runtime Interface Proxy. It sits between 
+CRI Resource Manager is a Container Runtime Interface Proxy. It sits between
 clients and the actual Container Runtime implementation (containerd, cri-o,
 dockershim+docker), relaying requests and responses back and forth. The main
 purpose of the proxy is to apply hardware-aware resource allocation policies

@@ -10,6 +10,8 @@ if "%SPHINXBUILD%" == "" (
 set SOURCEDIR=.
 set BUILDDIR=_build
 
+cd ..\..
+
 if "%1" == "" goto help
 
 %SPHINXBUILD% >NUL 2>NUL

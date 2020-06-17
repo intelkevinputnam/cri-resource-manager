@@ -42,7 +42,7 @@ author = 'various'
 #  if built with GitHub workflows:
 #
 #     the GitHub URLs will use the commit SHA (GITHUB_SHA environment variable
-#     is defined by GitHub workflows) to link to the specific commit. 
+#     is defined by GitHub workflows) to link to the specific commit.
 #
 ##############################################################################
 
@@ -87,7 +87,7 @@ html_theme = 'sphinx_rtd_theme'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+#html_static_path = ['_static']
 
 def setup(app):
     app.connect('doctree-resolved',fixLocalMDAnchors)
@@ -100,21 +100,21 @@ def setup(app):
 #
 #  1. Fix something that recommonmark does wrong.
 #  2. Provide support for .md files that are written as READMEs in a GitHub
-#     repo. 
+#     repo.
 #
 #  Only use these changes if using the extension ``recommonmark``.
 #
 ###############################################################################
 
 
-# Callback registerd with 'missing-reference'. 
+# Callback registerd with 'missing-reference'.
 def fixRSTLinkInMD(app, env, node, contnode):
     refTarget = node.get('reftarget')
     filePath = refTarget.lstrip("/")
     if '.rst' in refTarget and "://" not in refTarget:
     # This occurs when a .rst file is referenced from a .md file
     # Currently unable to check if file exists as no file
-    # context is provided and links are relative. 
+    # context is provided and links are relative.
     #
     # Example: [Application examples](examples/readme.rst)
     #
@@ -123,14 +123,14 @@ def fixRSTLinkInMD(app, env, node, contnode):
         return contnode
     else:
     # This occurs when a file is referenced for download from an .md file.
-    # Construct a list of them and short-circuit the warning. The files 
+    # Construct a list of them and short-circuit the warning. The files
     # are moved later (need file location context). To avoid warnings,
     # write .md files, make the links absolute. This only marks them fixed
     # if it can verify that they exist.
     #
     # Example: [Makefile](/Makefile)
     #
-        if isfile(filePath) or isdir(filePath): 
+        if isfile(filePath) or isdir(filePath):
             return contnode
 
 
@@ -149,7 +149,7 @@ def normalizePath(docPath,uriPath):
         return join(docDir,uriPath) #path to file from referencing file
 
 
-# Callback registerd with 'doctree-resolved'. 
+# Callback registerd with 'doctree-resolved'.
 def fixLocalMDAnchors(app, doctree, docname):
     for node in doctree.traverse(nodes.reference):
         uri = node.get('refuri')
@@ -157,9 +157,9 @@ def fixLocalMDAnchors(app, doctree, docname):
         if isfile(filePath):
         # Only do this if the file exists.
         #
-        # TODO: Pop a warning if the file doesn't exist. 
+        # TODO: Pop a warning if the file doesn't exist.
         #
-            if '.md' in uri and '://' not in uri: 
+            if '.md' in uri and '://' not in uri:
             # Make sure .md file links that weren't caught are converted.
             # These occur when creating an explicit link to an .md file
             # from an .rst file. By default these are not validated by Sphinx
@@ -173,7 +173,7 @@ def fixLocalMDAnchors(app, doctree, docname):
             #          [configuration options](autotest.md#configuration-options)
             #
                 node['refuri'] = node['refuri'].replace('.md','.html')
-            else: 
+            else:
             # Handle the case where markdown is referencing local files in the repo
             #
             # Example: [Makefile](/Makefile)
@@ -187,7 +187,7 @@ def fixLocalMDAnchors(app, doctree, docname):
                 else:
                 # If there are links to local files other than .md (.rst files are caught
                 # when warnings are fired), move the files into the Sphinx project, so
-                # they can be accessed. 
+                # they can be accessed.
                     newFileDir = join(app.outdir,dirname(filePath)) # where to move the file in Sphinx output.
                     newFilePath = join(app.outdir,filePath)
                     newURI = uri # if the path is relative no need to change it.
@@ -197,7 +197,7 @@ def fixLocalMDAnchors(app, doctree, docname):
                         docDirDepth = len(docname.split("/")) - 1
                         newURI = "../"*docDirDepth + uri
                     if not isdir(newFileDir):
-                        makedirs(newFileDir)                
+                        makedirs(newFileDir)
                     copyfile(filePath,newFilePath)
                     node['refuri'] = newURI
         elif "#" not in uri: # ignore anchors
@@ -205,4 +205,3 @@ def fixLocalMDAnchors(app, doctree, docname):
             if isdir(filePath):
                 newURI = githubDirURL + filePath
                 node['refuri']=newURI
-            
