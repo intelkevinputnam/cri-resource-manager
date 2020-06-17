@@ -1,0 +1,427 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>CRI Resource Manager for Kubernetes &mdash; CRI Resource Manager  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Policy Documentation" href="docs/index.html" />
+    <link rel="prev" title="Welcome to CRI Resource Manager’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> CRI Resource Manager
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CRI Resource Manager for Kubernetes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tl-dr-setup">TL;DR Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-kubelet-to-use-cri-resource-manager-as-the-runtime">Setting Up kubelet To Use CRI Resource Manager as the Runtime</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-cri-resource-manager">Setting Up CRI Resource Manager</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-a-local-configuration-from-a-file">Using a Local Configuration From a File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-cri-resource-manager-agent-and-a-configmap">Using CRI Resource Manager Agent and a ConfigMap</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cri-resource-manager-mutating-webhook">CRI Resource Manager Mutating Webhook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cri-resource-manager-node-agent">CRI Resource Manager Node Agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-cri-resource-manager-as-a-message-dumper">Using CRI Resource Manager as a Message Dumper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-docker-as-the-runtime">Using Docker as the Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging-and-debugging">Logging and Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/index.html">Policy Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SECURITY.html">Reporting a Potential Security Vulnerability:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo/demos.html">Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test/test.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/cri-resource-manager">Project GitHub repository</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CRI Resource Manager</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>CRI Resource Manager for Kubernetes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/README.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cri-resource-manager-for-kubernetes">
+<h1>CRI Resource Manager for Kubernetes<a class="headerlink" href="#cri-resource-manager-for-kubernetes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>CRI Resource Manager is a Container Runtime Interface Proxy. It sits between
+clients and the actual Container Runtime implementation (containerd, cri-o,
+dockershim+docker), relaying requests and responses back and forth. The main
+purpose of the proxy is to apply hardware-aware resource allocation policies
+to the containers running in the system.</p>
+<p>Policies are applied by either modifying a request before forwarding it, or
+by performing extra actions related to the request during its processing and
+proxying. There are several policies available, each with a different set of
+goals in mind and implementing different hardware allocation strategies. The
+details of whether and how a CRI request is altered or if extra actions are
+performed depend on which policy is active in CRI Resource Manager, and how
+that policy is configured.</p>
+<p>The current goal for the CRI Resource Manager is to prototype and experiment
+with new Kubernetes container placement policies. The existing policies are
+written with this in mind and the intended setup is for the Resource Manager
+to only act as a proxy for the Kubernetes Node Agent, kubelet.</p>
+</div>
+<div class="section" id="tl-dr-setup">
+<h2>TL;DR Setup<a class="headerlink" href="#tl-dr-setup" title="Permalink to this headline">¶</a></h2>
+<p>If you want to give CRI Resource Manager a try, here is the list of things
+you need to do, assuming you already have a Kubernetes cluster up and running,
+using either <code class="docutils literal notranslate"><span class="pre">containerd</span></code> or <code class="docutils literal notranslate"><span class="pre">cri-o</span></code> as the runtime.</p>
+<ol class="simple">
+<li><p>Set up kubelet to use CRI Resource Manager as the runtime.</p></li>
+<li><p>Set up CRI Resource Manager to use the runtime with a policy.</p></li>
+</ol>
+<p>For kubelet you do this by altering its command line options like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">kubelet</span> <span class="o">&lt;</span><span class="n">other</span><span class="o">-</span><span class="n">kubelet</span><span class="o">-</span><span class="n">options</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="n">runtime</span><span class="o">=</span><span class="n">remote</span> \
+     <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="n">runtime</span><span class="o">-</span><span class="n">endpoint</span><span class="o">=</span><span class="n">unix</span><span class="p">:</span><span class="o">///</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">cri</span><span class="o">-</span><span class="n">resmgr</span><span class="o">/</span><span class="n">cri</span><span class="o">-</span><span class="n">resmgr</span><span class="o">.</span><span class="n">sock</span>
+</pre></div>
+</div>
+<p>For CRI Resource Manager, you need to provide a configuration file, and also a
+socket path if you don’t use <code class="docutils literal notranslate"><span class="pre">containerd</span></code> or you run it with a different socket
+path.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="c1"># for containerd with default socket path</span>
+   <span class="n">cri</span><span class="o">-</span><span class="n">resmgr</span> <span class="o">--</span><span class="n">force</span><span class="o">-</span><span class="n">config</span> <span class="o">&lt;</span><span class="n">config</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">runtime</span><span class="o">-</span><span class="n">socket</span> <span class="n">unix</span><span class="p">:</span><span class="o">///</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">containerd</span><span class="o">/</span><span class="n">containerd</span><span class="o">.</span><span class="n">sock</span>
+   <span class="c1"># for cri-o</span>
+   <span class="n">cri</span><span class="o">-</span><span class="n">resmgr</span> <span class="o">--</span><span class="n">force</span><span class="o">-</span><span class="n">config</span> <span class="o">&lt;</span><span class="n">config</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">runtime</span><span class="o">-</span><span class="n">socket</span> <span class="n">unix</span><span class="p">:</span><span class="o">///</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">crio</span><span class="o">/</span><span class="n">crio</span><span class="o">.</span><span class="n">sock</span>
+</pre></div>
+</div>
+<p>The choice of policy to use along with any potential parameters specific to that
+policy are taken from the configuration file. You can take a look at the
+<a class="reference external" href="https://github.com/intelkevinputnam/cri-resource-manager/tree/cea5cd3177daa0f6b85c7b7305fd5ea758aebff4/sample-configs">sample configurations</a> for some minimal/trivial examples. For instance,
+you can use <a class="reference external" href="https://github.com/intelkevinputnam/cri-resource-manager/blob/cea5cd3177daa0f6b85c7b7305fd5ea758aebff4/sample-configs/memtier-policy.cfg">sample-configs/memtier-policy.cfg</a>
+as <code class="docutils literal notranslate"><span class="pre">&lt;config-file&gt;</span></code> to activate the topology aware policy with memory tiering support.</p>
+<p><strong>NOTE</strong>: Currently the available policies are work in progress.</p>
+<div class="section" id="setting-up-kubelet-to-use-cri-resource-manager-as-the-runtime">
+<h3>Setting Up kubelet To Use CRI Resource Manager as the Runtime<a class="headerlink" href="#setting-up-kubelet-to-use-cri-resource-manager-as-the-runtime" title="Permalink to this headline">¶</a></h3>
+<p>To let CRI Resource Manager act as a proxy between kubelet and the CRI runtime
+you need to configure kubelet to connect to CRI Resource Manager instead of
+the runtime. You do this by passing extra command line options to kubelet like
+this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">kubelet</span> <span class="o">&lt;</span><span class="n">other</span><span class="o">-</span><span class="n">kubelet</span><span class="o">-</span><span class="n">options</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="n">runtime</span><span class="o">=</span><span class="n">remote</span> \
+     <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="n">runtime</span><span class="o">-</span><span class="n">endpoint</span><span class="o">=</span><span class="n">unix</span><span class="p">:</span><span class="o">///</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">cri</span><span class="o">-</span><span class="n">resmgr</span><span class="o">/</span><span class="n">cri</span><span class="o">-</span><span class="n">resmgr</span><span class="o">.</span><span class="n">sock</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="setting-up-cri-resource-manager">
+<h2>Setting Up CRI Resource Manager<a class="headerlink" href="#setting-up-cri-resource-manager" title="Permalink to this headline">¶</a></h2>
+<p>Setting up CRI Resource Manager involves pointing it to your runtime and
+providing it with a configuration. Pointing to the runtime is done using
+the <code class="docutils literal notranslate"><span class="pre">--runtime-socket</span> <span class="pre">&lt;path&gt;</span></code> and, optionally, the <code class="docutils literal notranslate"><span class="pre">--image-socket</span> <span class="pre">&lt;path&gt;</span></code>.</p>
+<p>For providing a configuration there are two options:</p>
+<ol class="simple">
+<li><p>use a local configuration YAML file</p></li>
+<li><p>use the CRI Resource Manager Agent and a <code class="docutils literal notranslate"><span class="pre">ConfigMap</span></code></p></li>
+</ol>
+<p>The former is easier to set up and it is also the preferred way to run CRI
+Resource Manager for development, and in some cases testing. Setting up the
+latter is a bit more involved but it allows you to</p>
+<ul class="simple">
+<li><p>manage policy configuration for your cluster as a single source, and</p></li>
+<li><p>dynamically update that configuration</p></li>
+</ul>
+<div class="section" id="using-a-local-configuration-from-a-file">
+<h3>Using a Local Configuration From a File<a class="headerlink" href="#using-a-local-configuration-from-a-file" title="Permalink to this headline">¶</a></h3>
+<p>This is the easiest way to run CRI Resource Manager for development or testing.
+You can do it with the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">cri</span><span class="o">-</span><span class="n">resmgr</span> <span class="o">--</span><span class="n">force</span><span class="o">-</span><span class="n">config</span> <span class="o">&lt;</span><span class="n">config</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">runtime</span><span class="o">-</span><span class="n">socket</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>When started this way CRI Resource Manager reads its configuration from the
+given file. It also disables its agent interface for external configuration
+and updates.</p>
+</div>
+<div class="section" id="using-cri-resource-manager-agent-and-a-configmap">
+<h3>Using CRI Resource Manager Agent and a ConfigMap<a class="headerlink" href="#using-cri-resource-manager-agent-and-a-configmap" title="Permalink to this headline">¶</a></h3>
+<p>This setup requires an extra component, the CRI Resource Manager Node Agent,
+to monitor and fetch configuration from the ConfigMap and pass it on to CRI
+Resource Manager. By default CRI Resource Manager will automatically try to
+use the agent to acquire configuration, unless you override this by forcing
+a static local configuration using the <code class="docutils literal notranslate"><span class="pre">--force-config</span> <span class="pre">&lt;config-file&gt;</span></code> option.
+When using the agent, it is also possible to provide an initial fallback for
+configuration using the <code class="docutils literal notranslate"><span class="pre">--fallback-config</span> <span class="pre">&lt;config-file&gt;</span></code>. This file will be
+use before the very first configuration is successfully acquired from the
+agent.</p>
+<p>See the <a class="reference external" href="#cri-resource-manager-node-agent">later chapter</a> about how to set
+up and configure the agent.</p>
+</div>
+</div>
+<div class="section" id="cri-resource-manager-mutating-webhook">
+<h2>CRI Resource Manager Mutating Webhook<a class="headerlink" href="#cri-resource-manager-mutating-webhook" title="Permalink to this headline">¶</a></h2>
+<p>By default CRI Resource Manager does not see the original container <em>resource
+requirements</em> specified in the <em>Pod Spec</em>. It tries to calculate these for <code class="docutils literal notranslate"><span class="pre">cpu</span></code>
+and <code class="docutils literal notranslate"><span class="pre">memory</span></code> <em>compute resource</em>s using the related parameters present in the
+CRI container creation request. The resulting estimates are normally accurate
+for <code class="docutils literal notranslate"><span class="pre">cpu</span></code>, and also for <code class="docutils literal notranslate"><span class="pre">memory</span></code> <code class="docutils literal notranslate"><span class="pre">limits</span></code>. However, it is not possible to use
+these parameters to estimate <code class="docutils literal notranslate"><span class="pre">memory</span></code> <code class="docutils literal notranslate"><span class="pre">request</span></code>s or any <em>extended resource</em>s.</p>
+<p>If you want to make sure that CRI Resource Manager uses the origin <em>Pod Spec</em>
+<em>resource requirement</em>s, you need to duplicate these as <em>annotations</em> on the Pod.
+This is necessary if you plan using or writing a policy which needs <em>extended
+resource</em>s.</p>
+<p>This process can be fully automated using the <a class="reference external" href="https://github.com/intelkevinputnam/cri-resource-manager/tree/cea5cd3177daa0f6b85c7b7305fd5ea758aebff4/cmd/cri-resmgr-webhook">CRI Resource Manager Annotating
+Webhook</a>. Once you built the docker image for it using
+the [provided Dockerfile][cmd/cri-resmgr-webhook/Dockerfile] and published it,
+you can set up the webhook with these commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="n">cmd</span><span class="o">/</span><span class="n">cri</span><span class="o">-</span><span class="n">resmgr</span><span class="o">-</span><span class="n">webhook</span><span class="o">/</span><span class="n">mutating</span><span class="o">-</span><span class="n">webhook</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">yaml</span>
+  <span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="n">cmd</span><span class="o">/</span><span class="n">cri</span><span class="o">-</span><span class="n">resmgr</span><span class="o">-</span><span class="n">webhook</span><span class="o">/</span><span class="n">webhook</span><span class="o">-</span><span class="n">deployment</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cri-resource-manager-node-agent">
+<h2>CRI Resource Manager Node Agent<a class="headerlink" href="#cri-resource-manager-node-agent" title="Permalink to this headline">¶</a></h2>
+<p>CRI Resource Manager can be configured dynamically using the CRI Resource
+Manager Node Agent and Kubernetes ConfigMaps. The agent can be build using
+the <a class="reference external" href="https://github.com/intelkevinputnam/cri-resource-manager/blob/cea5cd3177daa0f6b85c7b7305fd5ea758aebff4/cmd/cri-resmgr-agent/Dockerfile">provided Dockerfile</a>. It can be deployed
+as a <code class="docutils literal notranslate"><span class="pre">DaemonSet</span></code> in the cluster using the <a class="reference external" href="https://github.com/intelkevinputnam/cri-resource-manager/blob/cea5cd3177daa0f6b85c7b7305fd5ea758aebff4/cmd/cri-resmgr-agent/agent-deployment.yaml">provided deployment file</a>.</p>
+<p>To run the agent manually or as a <code class="docutils literal notranslate"><span class="pre">systemd</span></code> service, set the environment variable
+<code class="docutils literal notranslate"><span class="pre">NODE_NAME</span></code> to the name of the cluster node the agent is running on. If necessary
+pass it the credentials for accessing the cluster using the the <code class="docutils literal notranslate"><span class="pre">-kubeconfig</span> <span class="pre">&lt;file&gt;</span></code>
+command line option.</p>
+<p>The agent monitors two ConfigMaps for the node, a primary node-specific one, and
+a secondary group-specific or default one, depending on whether the node belongs
+to a configuration group. The node-specific ConfigMap always takes precedence over
+the others.</p>
+<p>The names of these ConfigMaps are</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cri-resmgr-config.node.$NODE_NAME</span></code>: primary, node-specific configuration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cri-resmgr-config.group.$GROUP_NAME</span></code>: secondary group-specific node configuration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cri-resmgr-config.default</span></code>: secondary: secondary default node configuration</p></li>
+</ol>
+<p>You can assign a node to a configuration group by setting the
+<code class="docutils literal notranslate"><span class="pre">cri-resource-manager.intel.com/group</span></code> label on the node to the name of
+the configuration group. You can remove a node from its group by deleting the node
+group label.</p>
+<p>There is a <a class="reference external" href="https://github.com/intelkevinputnam/cri-resource-manager/blob/cea5cd3177daa0f6b85c7b7305fd5ea758aebff4/sample-configs/cri-resmgr-configmap.example.yaml">sample ConfigMap spec</a>
+that contains anode-specific, a group-specific, and a default ConfigMap examples.
+See <a class="reference external" href="https://github.com/intelkevinputnam/cri-resource-manager/tree/cea5cd3177daa0f6b85c7b7305fd5ea758aebff4/docs">any available policy-specific documentation</a> for more information on the
+policy configurations.</p>
+</div>
+<div class="section" id="using-cri-resource-manager-as-a-message-dumper">
+<h2>Using CRI Resource Manager as a Message Dumper<a class="headerlink" href="#using-cri-resource-manager-as-a-message-dumper" title="Permalink to this headline">¶</a></h2>
+<p>You can use CRI Resource Manager to simply inspect all proxied CRI requests and
+responses without applying any policy. Run CRI Resource Manager with the
+provided <a class="reference external" href="https://github.com/intelkevinputnam/cri-resource-manager/blob/cea5cd3177daa0f6b85c7b7305fd5ea758aebff4/sample-configs/cri-full-message-dump.cfg">sample configuration</a>
+for doing this.</p>
+</div>
+<div class="section" id="using-docker-as-the-runtime">
+<h2>Using Docker as the Runtime<a class="headerlink" href="#using-docker-as-the-runtime" title="Permalink to this headline">¶</a></h2>
+<p>If you must use <code class="docutils literal notranslate"><span class="pre">docker</span></code> as the runtime then the proxying setup is slightly more
+complex. Docker does not natively support the CRI API. Normally kubelet runs an
+internal protocol translator, <code class="docutils literal notranslate"><span class="pre">dockershim</span></code> to translate between CRI and the
+native docker API. To let CRI Resource Manager effectively proxy between kubelet
+and <code class="docutils literal notranslate"><span class="pre">docker</span></code> it needs to actually proxy between kubelet and <code class="docutils literal notranslate"><span class="pre">dockershim</span></code>. For this to
+be possible, you need to run two instances of kubelet:</p>
+<ol class="simple">
+<li><p>real instance talking to CRI Resource Manager/CRI</p></li>
+<li><p>dockershim instance, acting as a CRI-docker protocol translator</p></li>
+</ol>
+<p>The real kubelet instance you run as you would normally with any other real CRI
+runtime, but you specify the dockershim socket for the CRI Image Service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">kubelet</span> <span class="o">&lt;</span><span class="n">other</span><span class="o">-</span><span class="n">kubelet</span><span class="o">-</span><span class="n">options</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="n">runtime</span><span class="o">=</span><span class="n">remote</span> \
+     <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="n">runtime</span><span class="o">-</span><span class="n">endpoint</span><span class="o">=</span><span class="n">unix</span><span class="p">:</span><span class="o">///</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">cri</span><span class="o">-</span><span class="n">resmgr</span><span class="o">/</span><span class="n">cri</span><span class="o">-</span><span class="n">resmgr</span><span class="o">.</span><span class="n">sock</span> \
+     <span class="o">--</span><span class="n">image</span><span class="o">-</span><span class="n">service</span><span class="o">-</span><span class="n">endpoint</span><span class="o">=</span><span class="n">unix</span><span class="p">:</span><span class="o">///</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">dockershim</span><span class="o">.</span><span class="n">sock</span>
+</pre></div>
+</div>
+<p>The dockershim instance you run like this, picking the cgroupfs driver according
+to your real kubelet instance’s configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">kubelet</span> <span class="o">--</span><span class="n">experimental</span><span class="o">-</span><span class="n">dockershim</span> <span class="o">--</span><span class="n">port</span> <span class="mi">11250</span> <span class="o">--</span><span class="n">cgroup</span><span class="o">-</span><span class="n">driver</span> <span class="p">{</span><span class="n">systemd</span><span class="o">|</span><span class="n">cgroupfs</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging-and-debugging">
+<h2>Logging and Debugging<a class="headerlink" href="#logging-and-debugging" title="Permalink to this headline">¶</a></h2>
+<p>You can control logging and debugging with the <code class="docutils literal notranslate"><span class="pre">--logger-*</span></code> command line options. By
+default debug logs are globally disabled. You can turn on full debug logs with the
+<code class="docutils literal notranslate"><span class="pre">--logger-debug</span> <span class="pre">'*'</span></code> command line option.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="docs/index.html" class="btn btn-neutral float-right" title="Policy Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to CRI Resource Manager’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, various
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
