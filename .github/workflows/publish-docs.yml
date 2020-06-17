@@ -3,7 +3,7 @@ name: Publish
 on:
   push:
     branches:
-        - master
+        - kp-sphinx-test
 
 jobs:
   update-gh-pages:
